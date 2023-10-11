@@ -1,0 +1,5 @@
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Thực hiện chung\obj\Debug\net7.0\Thực hiện chung.csproj.AssemblyReference.cache
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Thực hiện chung\obj\Debug\net7.0\Thực hiện chung.GeneratedMSBuildEditorConfig.editorconfig
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Thực hiện chung\obj\Debug\net7.0\Thực hiện chung.AssemblyInfoInputs.cache
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Thực hiện chung\obj\Debug\net7.0\Thực hiện chung.AssemblyInfo.cs
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Thực hiện chung\obj\Debug\net7.0\Thực hiện chung.csproj.CoreCompileInputs.cache

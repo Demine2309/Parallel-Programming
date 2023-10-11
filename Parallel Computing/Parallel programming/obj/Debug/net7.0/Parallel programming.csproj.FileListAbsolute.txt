@@ -1,0 +1,15 @@
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Parallel programming\bin\Debug\net7.0\Parallel programming.exe
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Parallel programming\bin\Debug\net7.0\Parallel programming.deps.json
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Parallel programming\bin\Debug\net7.0\Parallel programming.runtimeconfig.json
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Parallel programming\bin\Debug\net7.0\Parallel programming.dll
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Parallel programming\bin\Debug\net7.0\Parallel programming.pdb
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Parallel programming\obj\Debug\net7.0\Parallel programming.csproj.AssemblyReference.cache
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Parallel programming\obj\Debug\net7.0\Parallel programming.GeneratedMSBuildEditorConfig.editorconfig
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Parallel programming\obj\Debug\net7.0\Parallel programming.AssemblyInfoInputs.cache
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Parallel programming\obj\Debug\net7.0\Parallel programming.AssemblyInfo.cs
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Parallel programming\obj\Debug\net7.0\Parallel programming.csproj.CoreCompileInputs.cache
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Parallel programming\obj\Debug\net7.0\Parallel programming.dll
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Parallel programming\obj\Debug\net7.0\refint\Parallel programming.dll
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Parallel programming\obj\Debug\net7.0\Parallel programming.pdb
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Parallel programming\obj\Debug\net7.0\Parallel programming.genruntimeconfig.cache
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Parallel programming\obj\Debug\net7.0\ref\Parallel programming.dll
