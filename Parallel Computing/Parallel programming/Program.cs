@@ -770,9 +770,173 @@ namespace ParallelProgarmming
     #region Maximum Degree of Parallelism in C#
     #region Theory
     /*
-     * 
+     ** How to use Maximum Degree of Parallelism in C#?
+     *  - Until now, when we use parallelism, we are allowing as many threads as possible from our computer to be used to solve 
+     *    the task that we have. However, this is not necessarily something we are going to want. Sometimes we would want to limit
+     *    the resources used for a task in order to be able to handle other tasks that we may have pending.
+     *  - We can configure this by defining the maximum degree of parallelism. With a maximum degree of parallelism, we can indicate
+     *    how many simultaneous threads we will have working on the code that we want to execute in parallel.
+     ** ParallelOptions Class in C#
+     *  - The ParallelOptions class is one of the most useful classes when working with multithreading. This class provides options
+     *    to limit the number of concurrently executing threads to execute our parallel code as well as provide options to cancel
+     *    the parallel execution.
+     ** How to use Maximum Degree of Parallelism in C#?
+     *  - The ParallelOptions class in C# provides the following constructor which we can use to create an instance of ParallelOptions 
+     *    class.
+     *      1. ParallelOptions(): It initializes a new instance of the System.Threading.Tasks.ParallelOptions class.
+     *  - The ParallelOptions class provides the following three propeties:
+     *      1. public TaskScheduler TaskScheduler {get; set;}: It is used to get or set the TaskScheduler associated with this 
+     *         ParallelOptions instance. Setting this property to null indicates that the current scheduler should be used. It 
+     *         returns the task scheduler that is associated with this instance.
+     *      2. public int MaxDegreeOfParallelism {get; set;}: It is used to get or set the maximum number of concurrent tasks enabled
+     *         by this ParallelOptions instance. It returns an integer that represents the maximum degree of parallelism. It will throw
+     *         ArgumentOutOfRangeException if the property is being set to zero or to a value that is less than -1. -1 is the default 
+     *         value which sets that there is no limitation of the concurrent tasks to be executed.
+     *      3. public CancellationToken CancellationToken {get; set;}: It is used to get or set the CancellationToken associated with
+     *         this ParallelOptions instance. It returns the token that is associated with this instance.
+     *  - So, in order to use Maximum Degree of Parallelism in C#, we need to create an instance of ParallelOptions class and we need 
+     *    to set the MaxDegreeOfParallelism properties to an integer number indicating the number of threads to execute the code.
+     *  + Ex:   var options = new ParallelOptions()
+     *          {
+     *              MaxDegreeOfParallelism = 3;
+     *          };
+     *  - C# provides Environment.ProcessorCount property will give us the number of logical processors on the machine on which the 
+     *    application is running. So, we need to set the Maximum Degree of Parallelism in C# as follows.
+     *  + Ex:   var options = new ParallelOptions()
+     *          {
+     *              MaxDegreeOfParallelism = Enviroment.ProcessorCount - 1;
+     *          };
+     *  - 
      */
+    #endregion
+
+    #region Example without using ParallelOption Class in C#
+    //class Program
+    //{
+    //    static void Main(string[] args)
+    //    {
+    //        Parallel.For(1, 11, i =>
+    //        {
+    //            Thread.Sleep(500);
+    //            Console.WriteLine($"Value of i = {i}, Thread = {Thread.CurrentThread.ManagedThreadId}");
+    //        });
+    //        Console.ReadLine();
+    //    }
+    //}
+    #endregion
+
+    #region Example using ParallelOption Class
+    //class Program
+    //{
+    //    static void Main(string[] args)
+    //    {
+    //        //Limiting the maximum degree of parallelism to 3
+    //        var options = new ParallelOptions()
+    //        {
+    //            MaxDegreeOfParallelism = 3
+    //        };
+
+    //        //A maximum of three threads are going to execute the code parallelly
+    //        Parallel.For(1, 11, options, i =>
+    //        {
+    //            Thread.Sleep(500);
+    //            Console.WriteLine($"Value of i = {i}, Thread = {Thread.CurrentThread.ManagedThreadId}");
+    //        });
+
+    //        Console.ReadLine();
+    //    }
+    //}
+    #endregion
+
+    #region Enviroment.ProcessorCount
+    //class Program
+    //{
+    //    static void Main(string[] args)
+    //    {
+    //        //Getting the Number of Processor count
+    //        int processorCount = Environment.ProcessorCount;
+
+    //        Console.WriteLine($"Processor Count on this Machine: {processorCount}\n");
+
+    //        //Limiting the maximum degree of parallelism to processorCount - 1
+    //        var options = new ParallelOptions()
+    //        {
+    //            //You can hard code the value as follows
+    //            //MaxDegreeOfParallelism = 7
+    //            //But better to use the following statement
+    //            MaxDegreeOfParallelism = Environment.ProcessorCount - 1
+    //        };
+
+    //        Parallel.For(1, 11, options, i =>
+    //        {
+    //            Thread.Sleep(500);
+    //            Console.WriteLine($"Value of i = {i}, Thread = {Thread.CurrentThread.ManagedThreadId}");
+    //        });
+
+    //        Console.ReadLine();
+    //    }
+    //}
+    #endregion
+
+    #region Maximum Degree of Parallelism Example using Parallel Foreach Loop
+    //class Program
+    //{
+    //    static void Main(string[] args)
+    //    {
+    //        //Limiting the maximum degree of parallelism to ProcessorCount - 1
+    //        var options = new ParallelOptions()
+    //        {
+    //            //MaxDegreeOfParallelism = 7
+    //            MaxDegreeOfParallelism = Environment.ProcessorCount - 1
+    //        };
+
+    //        List<int> integerList = Enumerable.Range(0, 10).ToList();
+    //        Parallel.ForEach(integerList, options, i =>
+    //        {
+    //            Console.WriteLine($"Value of i = {i}, thread = {Thread.CurrentThread.ManagedThreadId}");
+    //        });
+
+    //        Console.ReadLine();
+    //    }
+    //}
+    #endregion
+
+    #region Maximum Degree of Parallelism Example using Parallel Invoke method in C#
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var parallelOptions = new ParallelOptions()
+            {
+                MaxDegreeOfParallelism = 3
+                //MaxDegreeOfParallelism = Environment.ProcessorCount - 1
+            };
+
+            //Passing ParallelOptions as the first parameter
+            Parallel.Invoke(
+                    parallelOptions,
+                    () => DoSomeTask(1),
+                    () => DoSomeTask(2),
+                    () => DoSomeTask(3),
+                    () => DoSomeTask(4),
+                    () => DoSomeTask(5),
+                    () => DoSomeTask(6),
+                    () => DoSomeTask(7)
+                );
+
+            Console.ReadLine();
+        }
+
+        static void DoSomeTask(int number)
+        {
+            Console.WriteLine($"DoSomeTask {number} started by Thread {Thread.CurrentThread.ManagedThreadId}");
+            //Sleep for 5000 milliseconds
+            Thread.Sleep(5000);
+            Console.WriteLine($"DoSomeTask {number} completed by Thread {Thread.CurrentThread.ManagedThreadId}");
+        }
+    }
     #endregion
     #endregion
 }
+
 
