@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection.Metadata;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using static System.Formats.Asn1.AsnWriter;
@@ -942,8 +943,402 @@ namespace ParallelProgarmming
     #region Theory
     /*
      ** How to Cancel Parallel Operations in C#?
-     *  - 
+     *  - We can use the Cancellation Token to cancel operations in Parallel Programming. The ParallelOptions Class
+     *    provides the option to cancel the parallel execution.
+     *  - The ParallelOptions Class Provides the following three properties:
+     *      1. public TaskScheduler TaskScheduler {get; set;}: This property is used to get or set the TaskScheduler 
+     *         associated with the ParallelOptions instance. Setting this property to null indicates that the current 
+     *         scheduler should be used. It returns the task scheduler that is associated with this instance.
+     *      2. public int MaxDegreeOfParallelism {get; set;}: This property is used to get or set the maximum number 
+     *         of concurrent tasks enabled by the ParallelOptions instance. It returns an integer that represents the 
+     *         maximum degree of parallelism.
+     *      3. public CancellationToken CancellationToken {get; set;}: This property is used to get or set the 
+     *         CancellationToken associated with the ParallelOptions instance. It returns the token that is associated
+     *         with the ParallelOptions instance.
+     *  - In order to Cancel the Parallel Operations in C#, first, we need to create an instance of ParallelOptions 
+     *    class and then we need to create an instance of CancellationTokenSource and then we need to set the 
+     *    CancellationToken properties of ParallelOptions instance to the token of the CancellationTokenSource instance.
+     *  + Ex:   var CTS = new CancellationTokenSource();
+     *          
+     *          CTS.CancelAfter(TimeSpan.FromSeconds(5));
+     *          
+     *          var parallelOptions = new ParallelOptions()
+     *          {
+     *              CancellationToken = CTS.Token;
+     *          };
+     *          
      */
+    #endregion
+
+    #region Example without Cancelling the Parallel Operation 
+    // In the below example, we have set the degree of parallelism to 2 i.e. a maximum of two threads execute the methods
+    // parallelly.
+
+    //class Program
+    //{
+    //    static void Main(string[] args)
+    //    {
+    //        //Create an instance of ParallelOptions class
+    //        var parallelOptions = new ParallelOptions()
+    //        {
+    //            MaxDegreeOfParallelism = 2,
+    //        };
+
+    //        try
+    //        {
+    //            Stopwatch stopwatch = new Stopwatch();
+    //            stopwatch.Start();
+    //            //Passing ParallelOptions as the first parameter
+    //            Parallel.Invoke(
+    //                    parallelOptions,
+    //                    () => DoSomeTask(1),
+    //                    () => DoSomeTask(2),
+    //                    () => DoSomeTask(3),
+    //                    () => DoSomeTask(4),
+    //                    () => DoSomeTask(5),
+    //                    () => DoSomeTask(6),
+    //                    () => DoSomeTask(7)
+    //                );
+    //            stopwatch.Stop();
+    //            Console.WriteLine($"Time Taken to Execute all the Methods : {stopwatch.ElapsedMilliseconds / 1000.0} Seconds");
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            Console.WriteLine(ex.Message);
+    //        }
+
+    //        Console.ReadLine();
+    //    }
+
+    //    static void DoSomeTask(int number)
+    //    {
+    //        Console.WriteLine($"DoSomeTask {number} started by Thread {Thread.CurrentThread.ManagedThreadId}");
+    //        //Sleep for 2 seconds
+    //        Thread.Sleep(TimeSpan.FromSeconds(2));
+    //        Console.WriteLine($"DoSomeTask {number} completed by Thread {Thread.CurrentThread.ManagedThreadId}");
+    //    }
+    //}
+    #endregion
+
+    #region Example to Understand How to Cancel Parallel Operations
+    // In the below example, we are canceling the Parallel Execution after 4 seconds.
+
+    //class Program
+    //{
+    //    static void Main(string[] args)
+    //    {
+    //        //Create an Instance of CancellationTokenSource
+    //        var CTS = new CancellationTokenSource();
+
+    //        //Set when the token is going to cancel the parallel execution
+    //        CTS.CancelAfter(TimeSpan.FromSeconds(5));
+
+    //        //Create an instance of ParallelOptions class
+    //        var parallelOptions = new ParallelOptions()
+    //        {
+    //            MaxDegreeOfParallelism = 2,
+    //            //Set the CancellationToken value
+    //            CancellationToken = CTS.Token
+    //        };
+
+    //        try
+    //        {
+    //            Stopwatch stopwatch = new Stopwatch();
+    //            stopwatch.Start();
+    //            //Passing ParallelOptions as the first parameter
+    //            Parallel.Invoke(
+    //                    parallelOptions,
+    //                    () => DoSomeTask(1),
+    //                    () => DoSomeTask(2),
+    //                    () => DoSomeTask(3),
+    //                    () => DoSomeTask(4),
+    //                    () => DoSomeTask(5),
+    //                    () => DoSomeTask(6),
+    //                    () => DoSomeTask(7)
+    //                );
+    //            stopwatch.Stop();
+    //            Console.WriteLine($"Time Taken to Execute all the Methods : {stopwatch.ElapsedMilliseconds / 1000.0} Seconds");
+    //        }
+    //        //When the token cancelled, it will throw an exception
+    //        catch (Exception ex)
+    //        {
+    //            Console.WriteLine(ex.Message);
+    //        }
+    //        finally
+    //        {
+    //            //Finally dispose the CancellationTokenSource and set its value to null
+    //            CTS.Dispose();
+    //            CTS = null;
+    //        }
+    //        Console.ReadLine();
+    //    }
+
+    //    static void DoSomeTask(int number)
+    //    {
+    //        Console.WriteLine($"DoSomeTask {number} started by Thread {Thread.CurrentThread.ManagedThreadId}");
+    //        //Sleep for 2 seconds
+    //        Thread.Sleep(TimeSpan.FromSeconds(2));
+    //        Console.WriteLine($"DoSomeTask {number} completed by Thread {Thread.CurrentThread.ManagedThreadId}");
+    //    }
+    //}
+    // When you run the application, please observe the output carefully. Here, it started the execution parallelly
+    // by using two threads. 
+    #endregion
+
+    #region Canceling Parallel Operation Example using Parallel Foreach Loop
+    // In the below example, the collection contains 20 elements which means the Parallel Foreach loop will execute 20
+    // times. And here we set the MaxDegreeOfParallelism property to 2 which means a maximum of two threads will execute
+    // the loop parallelly. 
+
+    //class Program
+    //{
+    //    static void Main(string[] args)
+    //    {
+    //        //Create an Instance of CancellationTokenSource
+    //        var CTS = new CancellationTokenSource();
+
+    //        //Set when the token is going to cancel the parallel execution
+    //        CTS.CancelAfter(TimeSpan.FromSeconds(5));
+
+    //        //Create an instance of ParallelOptions class
+    //        var parallelOptions = new ParallelOptions()
+    //        {
+    //            MaxDegreeOfParallelism = 2,
+    //            //Set the CancellationToken value
+    //            CancellationToken = CTS.Token
+    //        };
+
+    //        try
+    //        {
+    //            List<int> integerList = Enumerable.Range(0, 20).ToList();
+    //            Parallel.ForEach(integerList, parallelOptions, i =>
+    //            {
+    //                Thread.Sleep(TimeSpan.FromSeconds(1));
+    //                Console.WriteLine($"Value of i = {i}, thread = {Thread.CurrentThread.ManagedThreadId}");
+    //            });
+
+    //        }
+    //        //When the token canceled, it will throw an exception
+    //        catch (Exception ex)
+    //        {
+    //            Console.WriteLine(ex.Message);
+    //        }
+    //        finally
+    //        {
+    //            //Finally dispose the CancellationTokenSource and set its value to null
+    //            CTS.Dispose();
+    //            CTS = null;
+    //        }
+    //        Console.ReadLine();
+    //    }
+    //}
+    #endregion
+    #endregion
+
+    #region Atomic Methods Thread Safety and Race Conditions in C#
+    #region Theory
+    /*
+     ** Atomic Methods
+     *  - So far, with the Parallel Methods (For, Foreach, and Invoke) we have worked and performed the task independently.
+     *    In the sense that they do not need external data or shared data to work. But this is not always going to be the 
+     *    case. Sometimes we will want to share data between threads.
+     *  - An important concept to consider is the concept of Atomic Methods. Atomic Methods can be used comfortably in a 
+     *    multithreaded environment because they guarantee determinism, that is we will always obtain the same result, no 
+     *    matter how many threads try to execute the method simultaneously.
+     ** Characteristics of Atomic Methods
+     *  1. First, if one thread is executing an atomic method, then another thread cannot see an intermediate state that is 
+     *     the operation has either not started or has already been completed. But there is no intermediate state between the
+     *     beginning and end.
+     *  2. Second, the operation will be completed successfully or will fail completely without making any modifications. This
+     *     part is similar to database transactions where either all operations are successful or none are performed if there
+     *     is at least one error.
+     ** How to Achieve Atomicity in C#?
+     *  - There are several ways to achieve Atomicity in C#. The most common way is to use locks. Locks allow us to block 
+     *    other threads from executing a piece of code when the lock is activated. If you are working with collections, then 
+     *    another option is to use concurrent collections, which are specially designed to handle multithread scenarios.
+     *  - If we do not use proper mechanisms, then we will end up with unexpected results, corrupted data, or incorrect values.
+     ** Thread Safety in #?
+     *  - An important concept in a parallelism environment is thread-safe. When we say that a method is thread-safe, we are 
+     *    saying that we can execute this method simultaneously from multiple threads without causing any kind of error. We 
+     *    know that we have thread safety when the application data is not corrupted if two or more threads try to perform
+     *    operations on the same data at the same time.
+     ** How to Achive Thread Safety in C#?
+     *  - Well, it all depends on what we do within the method. If within the method We added an external variable. Then we 
+     *    could have a problem with unexpected results in that variable. Something that we can use to mitigate this is to use
+     *    a synchronization mechanism like using Interlocked or using locks.
+     *  - If we need to transform objects, then we can use immutable objects to avoid the problems of corrupting those objects. 
+     *    Ideally, we should work with pure functions. Pure functions are those that return the same value for the same arguments 
+     *    and do not cause secondary effects.
+     ** Race Conditions in C#
+     *  - Race conditions occur in C# when we have a variable shared by several threads and these threads want to modify the 
+     *    variables simultaneously. The problem with this is that depending on the order of the sequence of operations done on a 
+     *    variable by different threads, the value of the variable will be different. Operations are simple as increasing by one.
+     *  - Race conditions occur in C# when we have a variable shared by several threads and these threads want to modify the 
+     *    variables simultaneously. The problem with this is that depending on the order of the sequence of operations done on a 
+     *    variable by different threads, the value of the variable will be different. Operations are simple as increasing by one.
+     *  - In fact, it is divided into three parts reading, increasing, and writing. Given the fact that we have three operations, 
+     *    two threads can execute them in such a way that even if we increase the value of a variable twice, only one increase 
+     *    takes effect.
+     ** How to Solve the above Problem in C#? (Try to update the variable simultaneously)
+     *  - Interlocked in C#:
+     *      + The Interlocked Class in C# allows us to perform certain operations in an atomic way, which makes this operation 
+     *        safe to do from different threads on the same variable. That means Interlocked class gives us a few methods that 
+     *        allow us to perform certain operations safely or atomically, even if the code is going to be executed by several 
+     *        threads simultaneously.
+     *  - Lock in C#:
+     *      + we can have a block of code that will only be executed by one thread at a time. That is, we limit a part of our 
+     *        code to be sequential, even if several threads try to execute that code at the same time. We use locks when we need
+     *        to perform several operations or an operation not covered by Interlocked.
+     *      + Something important to take into account is that ideally what we do inside a lock block should be relatively fast. 
+     *        This is because the threads are blocked while waiting for the release of the lock. And if you have multiple threads 
+     *        blocked for a longer period of time, this can have an impact on the speed of your application.
+     ** What is Interlocked Class in C#?
+     *  - Following are the methods provided by the C# Interlocked class:
+     *      1. Increment(): This method is used to increment a variable’s value and store its result. Int32 and Int64 integers 
+     *         are its legal parameters.
+     *      2. Increment(): This method is used to increment a variable’s value and store its result. Int32 and Int64 integers 
+     *         are its legal parameters.
+     *      3. Exchange(): This method is used to exchange values between variables. This method has seven overloaded versions 
+     *         based on the different types it can accept as its parameter
+     *      4. CompareExchange(): This method compares two variables and stores the result of the comparison in another variable.
+     *         This method also has seven overloaded versions
+     *      5. Add(): This method is used to add two integer variables and update the result in the first integer variable. It is 
+     *         used to add integers of type Int32 as well as Int64.
+     *      6. Read(): This method is used to reads an integer variable. It is used to read an integer of type Int64.
+     */
+    #endregion
+
+    #region Example to understand Interlocked 
+    // First, we will see the example without using Interlocked and see the problem, and then we will rewrite the same example
+    // using Interlocked and will see how interlocked solve the thread safety problem.
+
+    //class Program
+    //{
+    //    static void Main(string[] args)
+    //    {
+    //        var ValueWithoutInterlocked = 0;
+    //        Parallel.For(0, 100000, i =>
+    //        {
+    //            //Incrementing the value
+    //            ValueWithoutInterlocked++;
+    //        });
+    //        Console.WriteLine("Expected Result: 100000");
+    //        Console.WriteLine($"Actual Result: {ValueWithoutInterlocked}");
+    //        Console.ReadKey();
+    //    }
+    //}
+    // Now, run the above code multiple times and you will get different results each time
+
+    // The Increment method increments a specified variable and stores the result, as an atomic operation. So, here we need to
+    // specify the variable with the ref keyword as shown in the below example.
+
+    //class Program
+    //{
+    //    static void Main(string[] args)
+    //    {
+    //        var ValueInterlocked = 0;
+    //        Parallel.For(0, 100000, _ =>
+    //        {
+    //            //Incrementing the value
+    //            Interlocked.Increment(ref ValueInterlocked);
+    //        });
+    //        Console.WriteLine("Expected Result: 100000");
+    //        Console.WriteLine($"Actual Result: {ValueInterlocked}");
+    //        Console.ReadKey();
+    //    }
+    //}
+    // So, the Interlocked Class provides atomic operations for variables that are shared by multiple threads. That means the
+    // synchronization mechanism Interlocked allows us to avoid having race conditions by making the increment operation Atomic.
+    #endregion
+
+    #region Example to Understand the Lock
+    //class Program
+    //{
+    //    static object lockObject = new object();
+
+    //    static void Main(string[] args)
+    //    {
+    //        var ValueWithLock = 0;
+    //        Parallel.For(0, 100000, _ =>
+    //        {
+    //            lock (lockObject)
+    //            {
+    //                //Incrementing the value
+    //                ValueWithLock++;
+    //            }
+    //        });
+    //        Console.WriteLine("Expected Result: 100000");
+    //        Console.WriteLine($"Actual Result: {ValueWithLock}");
+    //        Console.ReadKey();
+    //    }
+    //}
+    #endregion
+
+    #region InterLocked.Add Method
+    // There are two overloaded versions of the Add method available in Interlocked Class.They are as follows:
+    // 1. public static long Add(ref long location1, long value): This method adds two 64-bit integers and replaces the first integer
+    //    with the sum, as an atomic operation.
+    // 2. public static int Add(ref int location1, int value): This method adds two 32-bit integers and replaces the first integer with
+    //    the sum, as an atomic operation.It returns the new value stored at location1.
+    // - The following are the Parameters:
+    // 1. location1: A variable containing the first value to be added.The sum of the two values is stored in location1.
+    // 2. value: The value to be added to the location1 variable.
+    //class Program
+    //{
+    //    static void Main(string[] args)
+    //    {
+    //        long SumValueWithoutInterlocked = 0;
+    //        long SumValueWithInterlocked = 0;
+    //        Parallel.For(0, 100000, number =>
+    //        {
+    //            SumValueWithoutInterlocked = SumValueWithoutInterlocked + number;
+    //            Interlocked.Add(ref SumValueWithInterlocked, number);
+    //        });
+
+    //        Console.WriteLine($"Sum Value Without Interlocked: {SumValueWithoutInterlocked}");
+    //        Console.WriteLine($"Sum Value With Interlocked: {SumValueWithInterlocked}");
+
+    //        Console.ReadKey();
+    //    }
+    //}
+    #endregion
+
+    #region Exchange and CompareExchange Method of Interlocked Class:
+    // The Exchange method of Interlocked Class in C# is atomically exchanging the values of the specified variables. The second
+    // value could be a hard-coded value or a variable. Only the first variable in the first parameter will be replaced by the second.
+
+    // The CompareExchange method of Interlocked Class in C# is used to combine two operations. Comparing two values and storing the
+    // third value in one of the variables, based on the outcome of the comparison. If both are equal then replace the one used as the
+    // first parameter with the supplied value
+
+    class Program
+    {
+        static long x;
+        static void Main(string[] args)
+        {
+            Thread thread1 = new Thread(new ThreadStart(SomeMethod));
+            thread1.Start();
+            thread1.Join();
+
+            // Written [20]
+            Console.WriteLine(Interlocked.Read(ref Program.x));
+
+            Console.ReadKey();
+        }
+
+        static void SomeMethod()
+        {
+            // Replace x with 20.
+            Interlocked.Exchange(ref Program.x, 20);
+
+            // CompareExchange: if x is 20, then change to current DateTime.Now.Day or any integer variable.
+            long result = Interlocked.CompareExchange(ref Program.x, DateTime.Now.Day, 20);
+            //long result = Interlocked.CompareExchange(ref Program.x, 50, 20);
+
+            // Returns original value from CompareExchange
+            Console.WriteLine(result);
+        }
+    }
     #endregion
     #endregion
 }
