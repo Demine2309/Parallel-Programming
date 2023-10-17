@@ -3,3 +3,13 @@ D:\Code\C# new\Parallel-Programming\Parallel Computing\Thực hiện chung\obj\D
 D:\Code\C# new\Parallel-Programming\Parallel Computing\Thực hiện chung\obj\Debug\net7.0\Thực hiện chung.AssemblyInfoInputs.cache
 D:\Code\C# new\Parallel-Programming\Parallel Computing\Thực hiện chung\obj\Debug\net7.0\Thực hiện chung.AssemblyInfo.cs
 D:\Code\C# new\Parallel-Programming\Parallel Computing\Thực hiện chung\obj\Debug\net7.0\Thực hiện chung.csproj.CoreCompileInputs.cache
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Thực hiện chung\bin\Debug\net7.0\Thực hiện chung.exe
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Thực hiện chung\bin\Debug\net7.0\Thực hiện chung.deps.json
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Thực hiện chung\bin\Debug\net7.0\Thực hiện chung.runtimeconfig.json
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Thực hiện chung\bin\Debug\net7.0\Thực hiện chung.dll
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Thực hiện chung\bin\Debug\net7.0\Thực hiện chung.pdb
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Thực hiện chung\obj\Debug\net7.0\Thực hiện chung.dll
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Thực hiện chung\obj\Debug\net7.0\refint\Thực hiện chung.dll
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Thực hiện chung\obj\Debug\net7.0\Thực hiện chung.pdb
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Thực hiện chung\obj\Debug\net7.0\Thực hiện chung.genruntimeconfig.cache
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Thực hiện chung\obj\Debug\net7.0\ref\Thực hiện chung.dll
