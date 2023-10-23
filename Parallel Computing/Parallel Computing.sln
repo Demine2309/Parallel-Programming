@@ -5,7 +5,9 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thực hiện chung", "Thực hiện chung\Thực hiện chung.csproj", "{89F70B3C-F876-4566-848C-66B10F829594}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parallel programming", "Parallel programming\Parallel programming.csproj", "{01B5E1F6-B40E-43D1-BA66-9E6803408F8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parallel programming", "Parallel programming\Parallel programming.csproj", "{01B5E1F6-B40E-43D1-BA66-9E6803408F8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Đề 13", "Đề 13\Đề 13.csproj", "{9EDD96D1-FCFB-4032-A832-E0EACF15E44A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{01B5E1F6-B40E-43D1-BA66-9E6803408F8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01B5E1F6-B40E-43D1-BA66-9E6803408F8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01B5E1F6-B40E-43D1-BA66-9E6803408F8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EDD96D1-FCFB-4032-A832-E0EACF15E44A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EDD96D1-FCFB-4032-A832-E0EACF15E44A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EDD96D1-FCFB-4032-A832-E0EACF15E44A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EDD96D1-FCFB-4032-A832-E0EACF15E44A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
