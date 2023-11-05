@@ -1,0 +1,15 @@
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Đề 13\bin\Debug\net7.0\Đề 13.exe
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Đề 13\bin\Debug\net7.0\Đề 13.deps.json
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Đề 13\bin\Debug\net7.0\Đề 13.runtimeconfig.json
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Đề 13\bin\Debug\net7.0\Đề 13.dll
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Đề 13\bin\Debug\net7.0\Đề 13.pdb
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Đề 13\obj\Debug\net7.0\Đề 13.csproj.AssemblyReference.cache
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Đề 13\obj\Debug\net7.0\Đề 13.GeneratedMSBuildEditorConfig.editorconfig
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Đề 13\obj\Debug\net7.0\Đề 13.AssemblyInfoInputs.cache
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Đề 13\obj\Debug\net7.0\Đề 13.AssemblyInfo.cs
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Đề 13\obj\Debug\net7.0\Đề 13.csproj.CoreCompileInputs.cache
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Đề 13\obj\Debug\net7.0\Đề 13.dll
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Đề 13\obj\Debug\net7.0\refint\Đề 13.dll
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Đề 13\obj\Debug\net7.0\Đề 13.pdb
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Đề 13\obj\Debug\net7.0\Đề 13.genruntimeconfig.cache
+D:\Code\C# new\Parallel-Programming\Parallel Computing\Đề 13\obj\Debug\net7.0\ref\Đề 13.dll

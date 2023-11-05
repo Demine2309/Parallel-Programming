@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thực hiện chung", "Th�
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parallel programming", "Parallel programming\Parallel programming.csproj", "{01B5E1F6-B40E-43D1-BA66-9E6803408F8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Đề 13", "Đề 13\Đề 13.csproj", "{9EDD96D1-FCFB-4032-A832-E0EACF15E44A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Đề 13", "Đề 13\Đề 13.csproj", "{9EDD96D1-FCFB-4032-A832-E0EACF15E44A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

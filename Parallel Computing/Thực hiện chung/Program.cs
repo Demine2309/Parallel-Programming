@@ -13,10 +13,12 @@ namespace ParallelComputing
     public class Matrix
     {
         private double[,] data;
+        private Random random;
 
         public Matrix(int rows, int cols)
         {
             data = new double[rows, cols];
+            random = new Random();
         }
 
         public void SetData(int row, int col, double value)
@@ -33,23 +35,59 @@ namespace ParallelComputing
 
             double[] result = new double[data.GetLength(0)];
 
-            var tasks = new Task[data.GetLength(0)];
-
-            for (int i = 0; i < data.GetLength(0); i++)
+            Parallel.For(0, data.GetLength(0), rowIndex =>
             {
-                int rowIndex = i;
-                tasks[i] = Task.Run(() =>
+                for (int j = 0; j < data.GetLength(1); j++)
                 {
-                    for (int j = 0; j < data.GetLength(1); j++)
-                    {
-                        result[rowIndex] += data[rowIndex, j] * vector[j];
-                    }
-                });
-            }
-
-            Task.WhenAll(tasks).Wait(); // Đợi tất cả các tác vụ hoàn thành.
+                    result[rowIndex] += data[rowIndex, j] * vector[j];
+                }
+            });
 
             return result;
+        }
+
+        public void DisplayMatrix()
+        {
+            Console.WriteLine("Matrix đầu vào:");
+
+            for (int i = 1; i <= data.GetLength(0); i++)
+            {
+                for (int j = 1; j <= data.GetLength(1); j++)
+                {
+                    Console.Write($"{data[i - 1, j - 1]}\t");
+                }
+
+                Console.WriteLine();
+            }
+        }
+
+        public void DisplayVector(double[] vector)
+        {
+            Console.WriteLine("Vector Đầu vào:");
+
+            for (int i = 1; i <= vector.Length; i++)
+            {
+                Console.WriteLine(vector[i - 1]);
+            }
+        }
+
+        public void RandomizeMatrix()
+        {
+            for (int i = 1; i <= data.GetLength(0); i++)
+            {
+                for (int j = 1; j <= data.GetLength(1); j++)
+                {
+                    data[i - 1, j - 1] = random.Next(-50, 51);
+                }
+            }
+        }
+
+        public void RandomizeVector(double[] vector)
+        {
+            for (int i = 1; i <= vector.Length; i++)
+            {
+                vector[i - 1] = random.Next(-50, 51);
+            }
         }
     }
 
@@ -58,6 +96,7 @@ namespace ParallelComputing
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.Unicode;
+            Console.WriteLine("TÍNH TÍCH CỦA MA TRẬN VÀ VECTOR\n\n");
 
             Console.Write("Nhập số hàng của ma trận: ");
             int numRows = int.Parse(Console.ReadLine());
@@ -65,41 +104,37 @@ namespace ParallelComputing
             Console.Write("Nhập số cột của ma trận: ");
             int numCols = int.Parse(Console.ReadLine());
 
+            // Tạo các phần tử của ma trận
             Matrix matrix = new Matrix(numRows, numCols);
+            matrix.RandomizeMatrix();
 
-            Console.WriteLine("Nhập giá trị cho ma trận:");
-            for (int i = 0; i < numRows; i++)
-            {
-                for (int j = 0; j < numCols; j++)
-                {
-                    Console.Write($"Nhập giá trị cho matrix[{i},{j}]: ");
-                    double value = double.Parse(Console.ReadLine());
-                    matrix.SetData(i, j, value);
-                }
-            }
+            Console.WriteLine();
+            matrix.DisplayMatrix();
 
-            Console.WriteLine("Nhập giá trị của vector:");
+            // Tạo các phần tử của vector
             double[] vector = new double[numCols];
-            for (int i = 0; i < numCols; i++)
-            {
-                Console.Write($"Nhập giá trị cho vector[{i}]: ");
-                vector[i] = double.Parse(Console.ReadLine());
-            }
+            matrix.RandomizeVector(vector);
+
+            Console.WriteLine();
+            matrix.DisplayVector(vector);
 
             try
             {
                 double[] result = matrix.MultiplyByVector(vector);
 
-                Console.WriteLine("Kết quả sau khi nhân ma trận với vector (song song):");
-                for (int i = 0; i < result.Length; i++)
+                Console.WriteLine("\nKết quả sau khi nhân ma trận với vector, ta thu được một vector mới: ");
+
+                for (int i = 1; i <= result.Length; i++)
                 {
-                    Console.WriteLine($"result[{i}] = {result[i]}");
+                    Console.WriteLine($"Vector[{i}]: {result[i - 1]}");
                 }
             }
             catch (ArgumentException e)
             {
                 Console.WriteLine(e.Message);
             }
+
+            Console.ReadKey();
         }
     }
 }
