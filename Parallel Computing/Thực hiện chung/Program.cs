@@ -5,6 +5,7 @@
 #endregion
 
 using System;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,6 +36,8 @@ namespace ParallelComputing
 
             double[] result = new double[data.GetLength(0)];
 
+
+            // Sử dụng đa luồng để tính các phần tử của vector mới song song
             Parallel.For(0, data.GetLength(0), rowIndex =>
             {
                 for (int j = 0; j < data.GetLength(1); j++)
@@ -42,6 +45,15 @@ namespace ParallelComputing
                     result[rowIndex] += data[rowIndex, j] * vector[j];
                 }
             });
+
+            // Tính lần lượt các phần tử của Vector mới
+            //for (int rowIndex = 0; rowIndex < data.GetLength(0); rowIndex++)
+            //{
+            //    for (int j = 0; j < data.GetLength(1); j++)
+            //    {
+            //        result[rowIndex] += data[rowIndex, j] * vector[j];
+            //    }
+            //}
 
             return result;
         }
@@ -118,9 +130,14 @@ namespace ParallelComputing
             Console.WriteLine();
             matrix.DisplayVector(vector);
 
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             try
             {
                 double[] result = matrix.MultiplyByVector(vector);
+                stopwatch.Stop();
+                TimeSpan elapsedTime = stopwatch.Elapsed;
 
                 Console.WriteLine("\nKết quả sau khi nhân ma trận với vector, ta thu được một vector mới: ");
 
@@ -128,6 +145,8 @@ namespace ParallelComputing
                 {
                     Console.WriteLine($"Vector[{i}]: {result[i - 1]}");
                 }
+
+                Console.WriteLine($"\nThời gian thực hiện: {elapsedTime.TotalMilliseconds} ms");
             }
             catch (ArgumentException e)
             {
