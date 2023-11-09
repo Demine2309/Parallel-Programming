@@ -40,10 +40,12 @@ namespace ParallelComputing
             // Sử dụng đa luồng để tính các phần tử của vector mới song song
             Parallel.For(0, data.GetLength(0), rowIndex =>
             {
+                double sum = 0;
                 for (int j = 0; j < data.GetLength(1); j++)
                 {
-                    result[rowIndex] += data[rowIndex, j] * vector[j];
+                    sum += data[rowIndex, j] * vector[j];
                 }
+                result[rowIndex] = sum;
             });
 
             // Tính lần lượt các phần tử của Vector mới
@@ -141,10 +143,15 @@ namespace ParallelComputing
 
                 Console.WriteLine("\nKết quả sau khi nhân ma trận với vector, ta thu được một vector mới: ");
 
-                for (int i = 1; i <= result.Length; i++)
+                //for (int i = 1; i <= result.Length; i++)
+                //{
+                //    Console.WriteLine($"Vector[{i}]: {result[i - 1]}");
+                //}
+
+                Parallel.For(0, result.Length, i =>
                 {
-                    Console.WriteLine($"Vector[{i}]: {result[i - 1]}");
-                }
+                    Console.WriteLine($"Vector[{i + 1}]: {result[i]}");
+                });
 
                 Console.WriteLine($"\nThời gian thực hiện: {elapsedTime.TotalMilliseconds} ms");
             }
