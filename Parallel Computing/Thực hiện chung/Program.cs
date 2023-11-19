@@ -48,6 +48,7 @@ namespace ParallelComputing
                 result[rowIndex] = sum;
             });
 
+
             // Tính lần lượt các phần tử của Vector mới
             //for (int rowIndex = 0; rowIndex < data.GetLength(0); rowIndex++)
             //{
@@ -91,7 +92,7 @@ namespace ParallelComputing
             {
                 for (int j = 1; j <= data.GetLength(1); j++)
                 {
-                    data[i - 1, j - 1] = random.Next(-50, 51);
+                    data[i - 1, j - 1] = random.Next(0, 51);
                 }
             }
         }
@@ -100,8 +101,14 @@ namespace ParallelComputing
         {
             for (int i = 1; i <= vector.Length; i++)
             {
-                vector[i - 1] = random.Next(-50, 51);
+                vector[i - 1] = random.Next(0, 51);
             }
+        }
+
+
+        private void DisplayResult()
+        {
+
         }
     }
 
@@ -148,10 +155,16 @@ namespace ParallelComputing
                 //    Console.WriteLine($"Vector[{i}]: {result[i - 1]}");
                 //}
 
-                Parallel.For(0, result.Length, i =>
+
+                for (int i = 0; i < result.Length; i++)
                 {
-                    Console.WriteLine($"Vector[{i + 1}]: {result[i]}");
-                });
+                    Console.WriteLine($"Vector[{i + 1}]: {result[i]}\t");
+                }
+
+                //Parallel.For(0, result.Length, i =>
+                //{
+                //    Console.WriteLine($"Vector[{i + 1}]: {result[i]}");
+                //});
 
                 Console.WriteLine($"\nThời gian thực hiện: {elapsedTime.TotalMilliseconds} ms");
             }
