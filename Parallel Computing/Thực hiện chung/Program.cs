@@ -104,12 +104,6 @@ namespace ParallelComputing
                 vector[i - 1] = random.Next(0, 51);
             }
         }
-
-
-        private void DisplayResult()
-        {
-
-        }
     }
 
     class Program
