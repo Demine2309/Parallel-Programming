@@ -37,7 +37,7 @@ namespace ParallelComputing
             double[] result = new double[data.GetLength(0)];
 
 
-            // Sử dụng đa luồng để tính các phần tử của vector mới song song
+            // Sử dụng lập trình song song để tính toán
             Parallel.For(0, data.GetLength(0), rowIndex =>
             {
                 double sum = 0;
@@ -49,41 +49,16 @@ namespace ParallelComputing
             });
 
 
-            // Tính lần lượt các phần tử của Vector mới
-            //for (int rowIndex = 0; rowIndex < data.GetLength(0); rowIndex++)
-            //{
-            //    for (int j = 0; j < data.GetLength(1); j++)
-            //    {
-            //        result[rowIndex] += data[rowIndex, j] * vector[j];
-            //    }
-            //}
+            // Sử dụng tính toán tuần tự để tính toán
+            for (int rowIndex = 0; rowIndex < data.GetLength(0); rowIndex++)
+            {
+                for (int j = 0; j < data.GetLength(1); j++)
+                {
+                    result[rowIndex] += data[rowIndex, j] * vector[j];
+                }
+            }
 
             return result;
-        }
-
-        public void DisplayMatrix()
-        {
-            Console.WriteLine("Matrix đầu vào:");
-
-            for (int i = 1; i <= data.GetLength(0); i++)
-            {
-                for (int j = 1; j <= data.GetLength(1); j++)
-                {
-                    Console.Write($"{data[i - 1, j - 1]}\t");
-                }
-
-                Console.WriteLine();
-            }
-        }
-
-        public void DisplayVector(double[] vector)
-        {
-            Console.WriteLine("Vector Đầu vào:");
-
-            for (int i = 1; i <= vector.Length; i++)
-            {
-                Console.WriteLine(vector[i - 1]);
-            }
         }
 
         public void RandomizeMatrix()
@@ -123,15 +98,9 @@ namespace ParallelComputing
             Matrix matrix = new Matrix(numRows, numCols);
             matrix.RandomizeMatrix();
 
-            Console.WriteLine();
-            matrix.DisplayMatrix();
-
             // Tạo các phần tử của vector
             double[] vector = new double[numCols];
             matrix.RandomizeVector(vector);
-
-            Console.WriteLine();
-            matrix.DisplayVector(vector);
 
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -140,25 +109,14 @@ namespace ParallelComputing
             {
                 double[] result = matrix.MultiplyByVector(vector);
                 stopwatch.Stop();
-                TimeSpan elapsedTime = stopwatch.Elapsed;
-
+                TimeSpan elapsedTime = stopwatch.Elapsed; 
+                
                 Console.WriteLine("\nKết quả sau khi nhân ma trận với vector, ta thu được một vector mới: ");
-
-                //for (int i = 1; i <= result.Length; i++)
-                //{
-                //    Console.WriteLine($"Vector[{i}]: {result[i - 1]}");
-                //}
-
 
                 for (int i = 0; i < result.Length; i++)
                 {
                     Console.WriteLine($"Vector[{i + 1}]: {result[i]}\t");
                 }
-
-                //Parallel.For(0, result.Length, i =>
-                //{
-                //    Console.WriteLine($"Vector[{i + 1}]: {result[i]}");
-                //});
 
                 Console.WriteLine($"\nThời gian thực hiện: {elapsedTime.TotalMilliseconds} ms");
             }
@@ -166,8 +124,6 @@ namespace ParallelComputing
             {
                 Console.WriteLine(e.Message);
             }
-
-            Console.ReadKey();
         }
     }
 }
